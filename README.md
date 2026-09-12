@@ -1,56 +1,22 @@
 # 🔐 Password Management System for Students (PMSS)
 
-A desktop password manager built in Java Swing, presented at the **ICCES 2022 International Conference** — designed to give students a simple, secure way to generate, encrypt, store, and retrieve account passwords locally.
+A desktop password manager built in Java Swing — designed to give students a simple, secure way to generate, encrypt, store, and retrieve account passwords locally.
 
-![screenshot](img/screenshot.png)
+![PMSS screenshot](img/screenshot.png)
 
 ## Why
 
-Students juggle logins for a dozen college portals, labs, and personal accounts, and tend to reuse weak passwords out of convenience. PMSS is a small, self-contained utility that removes the excuse: generate a strong password, store it encrypted, and pull it back up when you need it — no cloud account, no third-party service.
+Students juggle logins for a dozen college portals, labs, and personal accounts, and tend to reuse weak passwords out of convenience. PMSS removes the excuse: generate a strong password, encrypt it, and pull it back up whenever you need it — no cloud account, no third-party service, everything stays on your own machine.
 
-## Features
+**Core capabilities:**
+- 🔑 Generate cryptographically random passwords
+- 🔒 Encrypt passwords with a salted hash before storing them — nothing is ever saved in plain text
+- 🗂️ Store, search, and delete account credentials through a simple Swing GUI
+- 🎨 Custom JTattoo look and feel, with an animated splash screen on launch
 
-- 🔑 **Password generation** — cryptographically random passwords (`SecureRandom`) mixing uppercase, lowercase, digits, and symbols
-- 🔒 **SHA-1 + salt hashing** — passwords are never stored in plain text; each one is salted before hashing
-- 🗂️ **Custom hash table (linear probing)** — account/password pairs are stored in a hand-built open-addressing hash table rather than relying on `java.util.HashMap`, implemented from first principles for the underlying data-structure practice
-- 🔍 **Add, search, and delete accounts** — a full Swing GUI for day-to-day password management
-- 🎨 **Custom look and feel** — themed with the JTattoo library instead of default Swing styling
-- 🖼️ **Animated splash screen** on launch
+## How to Run
 
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Language | Java |
-| GUI | Java Swing |
-| Cryptography | SHA-1 message digest + random salt |
-| Data structure | Custom hash table with linear probing |
-| Look & Feel | [JTattoo](https://www.jtattoo.net/) |
-
-## Project Structure
-
-```text
-Password-Management-System/
-├── src/
-│   ├── PasswordManager.java      # Main application window & controller
-│   ├── SplashScreen.java         # Startup splash screen
-│   ├── HashtablePassword.java    # Custom hash table (linear probing)
-│   ├── hashTableMap.java         # Interface for the hash table
-│   ├── PasswordGenerator.java    # Secure random password generator
-│   ├── passwordEncryption.java   # SHA-1 + salt hashing
-│   └── META-INF/MANIFEST.MF
-├── lib/
-│   └── JTattoo-1.6.13.jar        # UI theming dependency
-├── img/
-│   ├── icon.png
-│   └── screenshot.png
-├── PMSS.jar                      # Prebuilt runnable jar
-└── README.md
-```
-
-## Running it
-
-**Option 1 — run the prebuilt jar**
+**Option 1 — run the prebuilt jar** (fastest, no compiling needed)
 
 ```bash
 java -cp "PMSS.jar;lib/JTattoo-1.6.13.jar" PasswordManager     # Windows
@@ -66,13 +32,9 @@ java -cp ".;../lib/JTattoo-1.6.13.jar" PasswordManager     # Windows
 java -cp ".:../lib/JTattoo-1.6.13.jar" PasswordManager     # macOS/Linux
 ```
 
-## How the security works
+> Requires a Java 17+ JDK on your `PATH`.
 
-1. When you add an account, `PasswordGenerator` can produce a random password from a full character set (upper, lower, digits, symbols).
-2. Before anything is stored, `passwordEncryption` generates a random salt (`SHA1PRNG`) and hashes the password with it via SHA-1 — so identical passwords never produce identical stored values.
-3. The salted hash is stored against the account name in `HashtablePassword`, a hash table implemented from scratch using **linear probing** for collision resolution, rather than a built-in Java collection.
-
-## Presented at
+## Presented At
 
 **ICCES 2022 International Conference** — presented as a solution addressing digital security awareness among students, with potential as a mobile or system-based utility app.
 
